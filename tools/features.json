@@ -1,0 +1,57 @@
+{
+  "_comment": "人工维护的适配策略。make_payloads.py 只往里补构建产物信息（sha256/大小/地址），绝不覆盖这里手写的字段。",
+  "_comment2": "cw2_min / cw2_max 必须写成主程序真实的版本形式（实测是 2.0.0.dev20260916 这种 PEP 440 形式），不要写成裸日期 dev20260901 —— 裸日期和 PEP 440 会落进不同的比较桶，导致判定永远不匹配。null 表示不限。",
+  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload 分发，同时也由 .github/workflows/release.yml 发布到 Release 页。没有这个标记的条目（如插件本体）不参与 payload 流程。",
+  "schema": 1,
+  "installer": {
+    "repo": "kryonF/more_-settings-features",
+    "min_cw2": "2.0.0.dev20260101",
+    "asset_url_template": "https://gitee.com/{repo}/releases/download/{tag}/{name}"
+  },
+  "features": [
+    {
+      "id": "kryon.extended_settings",
+      "name": "扩展设置",
+      "summary": "设置页本体、特定课程不隐藏。不触碰主程序源码。",
+      "patches": [],
+      "cw2_min": "2.0.0.dev20260101",
+      "cw2_max": null
+    },
+    {
+      "id": "kryon.time_enhance",
+      "name": "时间组件增强",
+      "summary": "时钟数字动画、显示秒、日期与星期、并排或交替布局。",
+      "payload": true,
+      "patches": [
+        "src/qml/widgets/Time.qml"
+      ],
+      "cw2_min": "2.0.0.dev20260901",
+      "cw2_max": null
+    },
+    {
+      "id": "kryon.countdown_anim",
+      "name": "倒计时动画",
+      "summary": "事件倒计时组件的数字滚动动画开关。",
+      "payload": true,
+      "patches": [
+        "src/qml/widgets/eventCountdown.qml"
+      ],
+      "cw2_min": "2.0.0.dev20260901",
+      "cw2_max": null
+    },
+    {
+      "id": "kryon.overlay",
+      "name": "堆叠组件",
+      "summary": "把一个组件叠在另一个上面，支持成员管理与上课时段切换。",
+      "payload": true,
+      "patches": [
+        "src/qml/ClassWidgets/Components/WidgetsContainer.qml",
+        "src/qml/ClassWidgets/Components/WidgetLoader.qml",
+        "src/qml/ClassWidgets/Components/dialogs/AddOverlayMemberDialog.qml"
+      ],
+      "cw2_min": "2.0.0.dev20260901",
+      "cw2_max": null
+    }
+  ],
+  "_comment4": "asset_url_template 是发行版附件的下载地址模板，{repo}/{tag}/{name} 会被替换。Gitee 与 GitHub 的附件地址格式不同，所以做成模板而不是写死在脚本里 —— 若实际直链格式与模板不符，只改这一个字符串。"
+}
