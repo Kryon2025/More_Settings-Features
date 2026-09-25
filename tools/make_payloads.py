@@ -39,8 +39,8 @@ import zipfile
 # zip 内统一的固定时间戳：保证构建可复现（同源码 → 同字节 → 同 sha256）
 _FIXED_DT = (1980, 1, 1, 0, 0, 0)
 
-# 发行版附件下载地址模板；features.json 里的同名字段可覆盖。
-# Gitee 与 GitHub 的格式不同，所以做成模板而不是写死一家。
+# 发行版里功能包的下载地址模板；features.json 里的同名字段可覆盖。
+# 做成模板而不写死，是为了换宿主或换地址格式时只改这一个字符串。
 _DEFAULT_ASSET_URL = "https://github.com/{repo}/releases/download/{tag}/{name}"
 
 

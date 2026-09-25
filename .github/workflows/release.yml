@@ -1,0 +1,35 @@
+name: Release payloads
+
+on:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: 安装依赖
+        run: pip install packaging
+
+      # 忘了提交 manifest.json 就到这里直接失败，
+      # 而不是发一堆 sha256 对不上的包 —— 插件下载后会核对这个值。
+      - name: 校验 manifest.json 与本次构建产物一致
+        run: python tools/make_payloads.py --out-dir dist --tag "${GITHUB_REF_NAME}" --check
+
+      # 建发行版并把功能包作为发行版文件放上去：
+      # 用户在发行页上点一下就能直接下载，然后从设置页的「导入本地文件」导进来。
+      - name: 建发行版并上传功能包
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh release create "${GITHUB_REF_NAME}" dist/*.cwpayload \
+            --title "${GITHUB_REF_NAME}" --generate-notes

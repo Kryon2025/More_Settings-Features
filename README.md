@@ -24,25 +24,29 @@
 2. 用户能感觉到的改动，就把 `features_src/<id>/payload.json` 的 `version` 提到新版本号；
 3. 构建：`python tools/make_payloads.py --out-dir dist --tag v<新版本号> --tested`
 4. 把被它更新过的 `manifest.json` **一起提交**；
-5. 打标签 `v<新版本号>` 推送。Gitee Go 流水线会校验 manifest.json 与本次构建产物
-   一致，然后建发行版、把 `dist/*.cwpayload` 传上去。
+5. 打标签 `v<新版本号>` 推送。GitHub Actions 会校验 manifest.json 与本次构建产物
+   一致，然后建发行版、把 `dist/*.cwpayload` 作为发行版文件传上去。
 
 第 5 步的校验是刻意的：`manifest.json` 里存着每个包的 sha256，插件下载后会核对。
 本地不提交、直接打标签，流水线会直接失败 —— 而不是发布一堆 hash 对不上的包。
 
+### 用户怎么拿到功能包
+
+两条路，都能用：
+
+- **设置页里点安装** —— 插件读 manifest.json，下载对应功能包、核对 sha256、解压落盘。
+- **去发行页手动下载** —— 功能包是发行版的普通文件，点一下直接下载，
+  然后在设置页用「导入本地文件」导进来。插件里那套下载逻辑不通时，这条路还能走。
+
 ### 不想开流水线也行
 
-流水线只是把下面两步连起来，手动做完全成立（就三个文件）：
+流水线只是把下面两步连起来，手动做完全成立（就三个文件）。装了 `gh` 的话：
 
     python tools/make_payloads.py --out-dir dist --tag v<新版本号> --tested
-    set GITEE_TOKEN=<你的私人令牌>
-    python tools/gitee_release.py --owner kryonF --repo more_-settings-features --tag v<新版本号> --dist dist
+    gh release create v<新版本号> dist/*.cwpayload --generate-notes
 
-或者更省事：在 Gitee 网页上「创建发行版」，把 `dist/` 里那三个 `.cwpayload` 拖进去。
-
-流水线配置在 `.workflow/ReleasePayloads.yml`，需要在流水线设置里加一个名为
-`GITEE_TOKEN` 的**私密变量**（Gitee 个人设置 -> 私人令牌，勾 `projects` 权限）。
-没配的话流水线会以「缺少令牌」退出，不会静默成功。
+或者更省事：在 GitHub 的发行页上「Draft a new release」，把 `dist/` 里那三个
+`.cwpayload` 拖进去。
 
 ## 版本号约定
 

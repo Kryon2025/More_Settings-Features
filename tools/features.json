@@ -4,9 +4,9 @@
   "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload 分发，同时也由 .github/workflows/release.yml 发布到 Release 页。没有这个标记的条目（如插件本体）不参与 payload 流程。",
   "schema": 1,
   "installer": {
-    "repo": "kryonF/more_-settings-features",
+    "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101",
-    "asset_url_template": "https://gitee.com/{repo}/releases/download/{tag}/{name}"
+    "asset_url_template": "https://github.com/{repo}/releases/download/{tag}/{name}"
   },
   "features": [
     {
@@ -53,5 +53,5 @@
       "cw2_max": null
     }
   ],
-  "_comment4": "asset_url_template 是发行版附件的下载地址模板，{repo}/{tag}/{name} 会被替换。Gitee 与 GitHub 的附件地址格式不同，所以做成模板而不是写死在脚本里 —— 若实际直链格式与模板不符，只改这一个字符串。"
+  "_comment4": "asset_url_template 是发行版里功能包的下载地址模板，{repo}/{tag}/{name} 会被替换。写成模板而不是写死在脚本里，是为了换宿主（或换地址格式）时只改这一个字符串。"
 }
