@@ -1,0 +1,8 @@
+# 开发者编辑器与打包过程的临时产物
+build/
+*.spec
+tools/.editor.json
+
+# Python 缓存
+__pycache__/
+*.pyc

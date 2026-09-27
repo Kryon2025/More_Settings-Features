@@ -15,14 +15,23 @@ CI 重新构建也能对得上，不会出现「本地算的 hash 与发布产�
 
 用法（在仓库根目录执行）：
 
-    # 1) 正式流程：本地生成 payload 并更新 manifest.json，然后把 manifest.json 提交
-    python tools/make_payloads.py --out-dir dist --tag v1.3.3.20260916
+    # 1) 正式流程：本地生成 payload 并更新 manifest.json，
+    #    然后把 payloads/ 与 manifest.json 一起提交（payload 不再挂到 Release 上）
+    python tools/make_payloads.py
 
-    # 2) CI 里校验：已提交的 manifest.json 是否与本次构建产物一致（不一致就报错退出）
-    python tools/make_payloads.py --out-dir dist --tag v1.3.3.20260916 --check
+    # 2) 只重建「和上一版内容不一样」的功能（内容 = 入口代码 + 资源，不含版本号）
+    python tools/make_payloads.py --changed
 
-    # 3) 发布正式版、确认过可用时，加 --tested 把新条目标成已测试
-    python tools/make_payloads.py --out-dir dist --tag v1.3.3.20260916 --tested
+    # 3) 只重建指定功能（多个用逗号分隔），没点到的功能保持清单里的旧条目不动
+    python tools/make_payloads.py --only kryon.extended_settings,kryon.overlay
+
+    # 4) 校验：已提交的 manifest.json 是否与 payloads/ 里的文件一致
+    python tools/make_payloads.py --check
+
+    # 5) 确认功能在主程序里能用了，再加 --tested 把新条目标成已测试
+    python tools/make_payloads.py --tested
+
+默认输出目录是仓库里的 payloads/；下载地址模板见 features.json 的 asset_url_template。
 """
 
 from __future__ import annotations
@@ -39,9 +48,11 @@ import zipfile
 # zip 内统一的固定时间戳：保证构建可复现（同源码 → 同字节 → 同 sha256）
 _FIXED_DT = (1980, 1, 1, 0, 0, 0)
 
-# 发行版里功能包的下载地址模板；features.json 里的同名字段可覆盖。
-# 做成模板而不写死，是为了换宿主或换地址格式时只改这一个字符串。
-_DEFAULT_ASSET_URL = "https://github.com/{repo}/releases/download/{tag}/{name}"
+# 功能包的下载地址模板；features.json 里的同名字段可覆盖。
+# payload 现在是提交进仓库 payloads/ 目录后直接下载的普通文件（不再是 Release 附件），
+# 所以默认走仓库直链。想换 CDN（例如 cdn.jsdelivr.net）只改这一个字符串。
+_DEFAULT_ASSET_URL = "https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}"
+_DEFAULT_BRANCH = "main"
 
 
 def cw_key(v):
@@ -70,6 +81,56 @@ def sha256_of(path: pathlib.Path) -> str:
         for chunk in iter(lambda: f.read(1 << 20), b""):
             h.update(chunk)
     return h.hexdigest()
+
+
+# ── 「和上一版比有没有变」用的内容指纹 ────────────────────────
+# 指纹只覆盖「入口代码 + resources 声明的资源」，**不含版本号**。
+# 这样「只改了版本号、功能代码一字没动」能被识别成「没变」，不必重新分发。
+
+def _content_items(src: pathlib.Path, root: pathlib.Path, meta: dict) -> dict:
+    """功能内容：包内路径 -> 字节。"""
+    entry = str(meta.get("entry") or "feature.py")
+    items = {entry: (src / entry).read_bytes()}
+    for dest_rel, src_rel in (meta.get("resources") or {}).items():
+        items[str(dest_rel)] = (root / str(src_rel)).read_bytes()
+    return items
+
+
+def _digest_items(items: dict) -> str:
+    h = hashlib.sha256()
+    for name in sorted(items):
+        data = items[name]
+        h.update(name.encode("utf-8"))
+        h.update(b"\0")
+        h.update(len(data).to_bytes(8, "little"))
+        h.update(data)
+    return h.hexdigest()
+
+
+def source_digest(root: pathlib.Path, feature: dict) -> str:
+    """源码侧的内容指纹。"""
+    src = root / "features_src" / feature["id"]
+    meta = json.loads((src / "payload.json").read_text(encoding="utf-8"))
+    return _digest_items(_content_items(src, root, meta))
+
+
+def payload_content_digest(path: pathlib.Path) -> str:
+    """同样的指纹，但从已经打好的 .cwpayload 里算（payload.json 含版本号，排除）。"""
+    with zipfile.ZipFile(path) as zf:
+        items = {n: zf.read(n) for n in zf.namelist() if n != "payload.json"}
+    return _digest_items(items)
+
+
+def newest_built_payload(out_dir: pathlib.Path, fid: str):
+    """out_dir 里该功能版本号最大的 payload（用来与「上一版」对比）。"""
+    files = list(out_dir.glob(f"{fid}-*.cwpayload"))
+    if not files:
+        return None
+
+    def ver(p: pathlib.Path) -> str:
+        return p.name[len(fid) + 1:-len(".cwpayload")]
+
+    return max(files, key=lambda p: cw_key(ver(p)))
 
 
 def plugin_version(root: pathlib.Path) -> str:
@@ -133,8 +194,16 @@ def build_payload(root: pathlib.Path, feature: dict, out_dir: pathlib.Path):
 
 def main() -> int:
     ap = argparse.ArgumentParser()
-    ap.add_argument("--out-dir", default="dist", help="payload 输出目录")
-    ap.add_argument("--tag", default="", help="GitHub Release 标签，如 v1.3.3.20260916")
+    ap.add_argument("--root", default="",
+                    help="仓库根目录（默认取本脚本的上一级；被开发者编辑器调用时显式传入）")
+    ap.add_argument("--out-dir", default="payloads",
+                    help="payload 输出目录（默认仓库里的 payloads/，会被提交进仓库）")
+    ap.add_argument("--tag", default="",
+                    help="仅当地址模板里用到 {tag} 时才需要（现在默认不用）")
+    ap.add_argument("--only", default="",
+                    help="只构建这些功能 id（逗号分隔），其余沿用清单里的旧条目")
+    ap.add_argument("--changed", action="store_true",
+                    help="只重建与上一版内容不同的功能（内容=入口代码+资源，不含版本号）")
     ap.add_argument("--features", default="tools/features.json")
     ap.add_argument("--manifest", default="manifest.json")
     ap.add_argument("--repo", default="", help="覆盖 features.json 里的仓库（owner/repo）")
@@ -144,7 +213,8 @@ def main() -> int:
                     help="只校验：已提交的 manifest.json 是否与本次构建一致，不一致就退出码 1")
     args = ap.parse_args()
 
-    root = pathlib.Path(__file__).resolve().parent.parent
+    root = (pathlib.Path(args.root).resolve() if args.root
+            else pathlib.Path(__file__).resolve().parent.parent)
     policy = json.loads((root / args.features).read_text(encoding="utf-8"))
     repo = args.repo or policy["installer"]["repo"]
     out_dir = (root / args.out_dir) if not pathlib.Path(args.out_dir).is_absolute() \
@@ -163,10 +233,33 @@ def main() -> int:
         print("features.json 里没有标记 \"payload\": true 的功能，无事可做")
         return 0
 
+    if args.only:
+        want = {s.strip() for s in args.only.split(",") if s.strip()}
+        known = {f["id"] for f in targets}
+        unknown = want - known
+        if unknown:
+            print(f"  !! --only 里有清单里没有的功能: {', '.join(sorted(unknown))}")
+        targets = [f for f in targets if f["id"] in want]
+        if not targets:
+            print("  !! --only 筛完一个功能都不剩，退出")
+            return 1
+        print("只构建: " + ", ".join(f["id"] for f in targets))
+
     built = {}
     problems = []
     for feat in targets:
         fid = feat["id"]
+        if args.changed:
+            prev = newest_built_payload(out_dir, fid)
+            if prev is not None:
+                try:
+                    same = source_digest(root, feat) == payload_content_digest(prev)
+                except Exception as e:
+                    same = False
+                    print(f"  !! {fid}: 与 {prev.name} 比对失败（按「有变化」处理）— {e}")
+                if same:
+                    print(f"  跳过 {fid}: 与上一版内容一致（{prev.name}），不必重新分发")
+                    continue
         try:
             path, digest, version, meta = build_payload(root, feat, out_dir)
         except Exception as e:
@@ -218,8 +311,10 @@ def main() -> int:
             matched.add(fid)
             tpl = (policy["installer"].get("asset_url_template")
                    or _DEFAULT_ASSET_URL)
-            url = tpl.format(repo=repo, tag=args.tag, name=path.name) \
-                if args.tag else ""
+            if "{tag}" in tpl and not args.tag:
+                print(f"  !! {fid}: 地址模板里有 {{tag}} 但没给 --tag，生成的地址会不正确")
+            url = tpl.format(repo=repo, tag=args.tag,
+                             branch=_DEFAULT_BRANCH, name=path.name)
             old = versions.get(version)
             if old and str(old.get("sha256", "")).lower() == digest.lower():
                 # 同一份文件：保留原条目（含 tested 状态和人工备注），只补地址

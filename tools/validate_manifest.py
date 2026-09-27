@@ -9,7 +9,7 @@
     - schema / installer / features 结构完整
     - 每个 feature 的 id 唯一、字段齐全
     - 每个版本号能被主程序的日期版本规则接受
-    - asset 地址形态正确（GitHub Release 固定格式）
+    - asset 地址形态正确（Release 附件固定格式，或 raw 直链）
     - sha256 是 64 位十六进制
     - cw2_min <= cw2_max（都填了的话）
     - 同一个主程序文件被多个功能声明时给出冲突警告（不是错误，但要知道）
@@ -101,7 +101,9 @@ def main():
             if not HEX64.match(sha):
                 errors.append(f"{tag}: sha256 不是 64 位十六进制")
             asset = v.get("asset", "")
-            if not asset.startswith("https://github.com/"):
+            if asset.startswith("https://raw.githubusercontent.com/"):
+                pass  # 现行分发方案：payload 提交进仓库，走 raw 直链
+            elif not asset.startswith("https://github.com/"):
                 errors.append(f"{tag}: asset 不是 GitHub 地址")
             elif "/releases/download/" not in asset:
                 errors.append(f"{tag}: asset 不是 Release 固定格式")
@@ -134,8 +136,12 @@ def main():
                                   f"实际 {actual[:12]}…）")
                 else:
                     with zipfile.ZipFile(pkg) as z:
+                        names = z.namelist()
+                        # payload 用 payload.json；插件包才用 cwplugin.json
+                        mname = ("cwplugin.json" if "cwplugin.json" in names
+                                 else "payload.json" if "payload.json" in names else "")
                         try:
-                            meta = json.loads(z.read("cwplugin.json").decode("utf-8"))
+                            meta = json.loads(z.read(mname).decode("utf-8")) if mname else {}
                         except Exception:
                             meta = {}
                     if meta.get("version") != v.get("version"):

@@ -1,21 +1,24 @@
 {
   "_comment": "人工维护的适配策略。make_payloads.py 只往里补构建产物信息（sha256/大小/地址），绝不覆盖这里手写的字段。",
   "_comment2": "cw2_min / cw2_max 必须写成主程序真实的版本形式（实测是 2.0.0.dev20260916 这种 PEP 440 形式），不要写成裸日期 dev20260901 —— 裸日期和 PEP 440 会落进不同的比较桶，导致判定永远不匹配。null 表示不限。",
-  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload 分发，同时也由 .github/workflows/release.yml 发布到 Release 页。没有这个标记的条目（如插件本体）不参与 payload 流程。",
+  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload。功能包提交进仓库的 payloads/ 目录后由直链分发，不再挂到 Release 附件上；发布动作就是「提交 payloads/ 与 manifest.json」。",
   "schema": 1,
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101",
-    "asset_url_template": "https://github.com/{repo}/releases/download/{tag}/{name}"
+    "asset_url_template": "https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}"
   },
   "features": [
     {
       "id": "kryon.extended_settings",
-      "name": "扩展设置",
-      "summary": "设置页本体、特定课程不隐藏。不触碰主程序源码。",
-      "patches": [],
-      "cw2_min": "2.0.0.dev20260101",
-      "cw2_max": null
+      "name": "组件增强",
+      "summary": "小组件高度与深度、特定课程不隐藏，以及组件设置页的后端注入。这些是打在主程序上的补丁，卸载后补丁会真的撤掉。",
+      "patches": [
+        "src/qml/ClassWidgets/Components/WidgetsContainer.qml"
+      ],
+      "cw2_min": "2.0.0.dev20260916",
+      "cw2_max": "2.0.0.dev20260923",
+      "payload": true
     },
     {
       "id": "kryon.time_enhance",
@@ -53,5 +56,5 @@
       "cw2_max": null
     }
   ],
-  "_comment4": "asset_url_template 是发行版里功能包的下载地址模板，{repo}/{tag}/{name} 会被替换。写成模板而不是写死在脚本里，是为了换宿主（或换地址格式）时只改这一个字符串。"
+  "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name} 会被替换（模板里用到 {tag} 时命令行需给 --tag）。默认走仓库直链；想换 CDN（如 cdn.jsdelivr.net/gh/{repo}@main/payloads/{name}）只改这一个字符串。"
 }
