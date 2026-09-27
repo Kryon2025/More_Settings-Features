@@ -247,6 +247,7 @@ def main() -> int:
 
     built = {}
     problems = []
+    committed = {}
     for feat in targets:
         fid = feat["id"]
         if args.changed:
@@ -260,6 +261,17 @@ def main() -> int:
                 if same:
                     print(f"  跳过 {fid}: 与上一版内容一致（{prev.name}），不必重新分发")
                     continue
+        # --check 是只读校验：重建会覆盖同路径文件，先把已提交那份的指纹取下来
+        if args.check:
+            try:
+                _meta = json.loads((root / "features_src" / fid / "payload.json")
+                                   .read_text(encoding="utf-8"))
+            except Exception:
+                _meta = {}
+            _v = str(_meta.get("version") or "").strip() or plugin_version(root)
+            _p = out_dir / f"{fid}-{_v}.cwpayload"
+            if _v and _p.is_file():
+                committed[fid] = (sha256_of(_p), payload_content_digest(_p))
         try:
             path, digest, version, meta = build_payload(root, feat, out_dir)
         except Exception as e:
@@ -277,13 +289,24 @@ def main() -> int:
             if not old:
                 print(f"  !! {fid} {version}: manifest.json 里没有这个版本条目")
                 bad += 1
-            elif str(old.get("sha256", "")).lower() != digest.lower():
-                print(f"  !! {fid} {version}: sha256 不一致")
+            elif fid not in committed:
+                print(f"  !! {fid} {version}: payloads/ 里没有这份已提交的包")
+                bad += 1
+            elif str(old.get("sha256", "")).lower() != committed[fid][0].lower():
+                print(f"  !! {fid} {version}: 清单里的 sha256 与 payloads/ 里的包对不上")
                 print(f"       清单: {old.get('sha256')}")
-                print(f"       本次: {digest}")
+                print(f"       文件: {committed[fid][0]}")
                 bad += 1
             else:
-                print(f"  OK  {fid} {version}")
+                _feat = next((f for f in targets if f["id"] == fid), None)
+                _src = source_digest(root, _feat) if _feat else ""
+                if _src != committed[fid][1]:
+                    print(f"  !! {fid} {version}: 源码改过，但 payloads/ 没重新生成")
+                    print(f"       源码指纹: {_src[:16]}…")
+                    print(f"       包内指纹: {committed[fid][1][:16]}…")
+                    bad += 1
+                else:
+                    print(f"  OK  {fid} {version}（内容与源码一致）")
         if bad or problems:
             print(f"\n共 {bad + len(problems)} 处不一致。"
                   f"请先在本地跑一次 make_payloads.py 并把 manifest.json 提交。")
