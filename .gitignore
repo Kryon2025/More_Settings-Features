@@ -6,3 +6,12 @@ tools/.editor.json
 # Python 缓存
 __pycache__/
 *.pyc
+
+# 本地开发物（插件源码在插件仓库里，这里只是副本/产物，不进版本库）
+/appearances/
+/shaders/
+/RinUI/
+/dist/
+/tools/payload_editor.py
+/开发者编辑器.exe
+/开发者说明.md
