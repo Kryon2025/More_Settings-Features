@@ -15,7 +15,7 @@
           "version": "1.3.4",
           "tested": true,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/Class-Widgets-2-More_settings/releases/download/v1.3.4/kryon.extended_settings-1.3.4.cwpayload",
           "size": 4248,
           "sha256": "0cb8662a4d4104020adb8c561777dd52787fe2248264730b9dfc3d2ccb1027d0"
         }
@@ -35,7 +35,7 @@
           "version": "1.3.4",
           "tested": true,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.time_enhance-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/Class-Widgets-2-More_settings/releases/download/v1.3.4/kryon.time_enhance-1.3.4.cwpayload",
           "size": 5415,
           "sha256": "e084acfb960e2a3f54aaa87ccb6c76d5dcc8cb7b77281c458b367ebf60432d78"
         }
@@ -55,7 +55,7 @@
           "version": "1.3.4",
           "tested": true,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.countdown_anim-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/Class-Widgets-2-More_settings/releases/download/v1.3.4/kryon.countdown_anim-1.3.4.cwpayload",
           "size": 3452,
           "sha256": "e08ce9465b6e5ffbf5ff637f245f801e5a85bb0532991962cd27faef9076dc3f"
         }
@@ -77,14 +77,14 @@
           "version": "1.3.4",
           "tested": true,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/Class-Widgets-2-More_settings/releases/download/v1.3.4/kryon.overlay-1.3.4.cwpayload",
           "size": 20064,
           "sha256": "dbb94737da1d296d3bb8421a9c43ccb2112a57a80fd355300d4029ad9dd3dfcc"
         }
       ]
     }
   ],
-  "updated": "2026-09-27T15:50:23+08:00",
+  "updated": "2026-10-02T20:58:01+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"

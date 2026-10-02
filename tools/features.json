@@ -1,12 +1,12 @@
 {
   "_comment": "人工维护的适配策略。make_payloads.py 只往里补构建产物信息（sha256/大小/地址），绝不覆盖这里手写的字段。",
   "_comment2": "cw2_min / cw2_max 必须写成主程序真实的版本形式（实测是 2.0.0.dev20260916 这种 PEP 440 形式），不要写成裸日期 dev20260901 —— 裸日期和 PEP 440 会落进不同的比较桶，导致判定永远不匹配。null 表示不限。",
-  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload。功能包提交进仓库的 payloads/ 目录后由直链分发，不再挂到 Release 附件上；发布动作就是「提交 payloads/ 与 manifest.json」。",
+  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload。功能包由插件（Class-Widgets-2-More_settings）的发版流程构建，并作为附件挂到该插件的 Release 上；发布动作就是「提交 payloads/ 与 manifest.json，再推一个 v*.*.* 标签」。",
   "schema": 1,
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101",
-    "asset_url_template": "https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}"
+    "asset_url_template": "https://github.com/Kryon2025/Class-Widgets-2-More_settings/releases/download/{tag}/{name}"
   },
   "features": [
     {
@@ -56,5 +56,5 @@
       "cw2_max": null
     }
   ],
-  "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name} 会被替换（模板里用到 {tag} 时命令行需给 --tag）。默认走仓库直链；想换 CDN（如 cdn.jsdelivr.net/gh/{repo}@main/payloads/{name}）只改这一个字符串。"
+  "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name}/{tag} 会被替换（模板里用到 {tag} 时命令行需给 --tag，发版流程给的就是本次标签）。现在指向插件 Release 的附件；仓库里的 payloads/ 仍保留一份，直链模板是 https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}。"
 }
