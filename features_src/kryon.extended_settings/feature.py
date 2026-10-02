@@ -37,6 +37,22 @@ def apply_patches(host):
     except Exception as e:
         host.warn(f"应用容器补丁失败: {e}")
         return False
+
+    # 旧版主程序（位置还写成 calcY 的时候）才套用 v1 整组，
+    # 否则在 v2 上每次启动都会白报一串「锚点未找到」。
+    try:
+        text, _ = host.read_host("container")
+        if "shownY" not in text:
+            host.apply_ops("container", host.ops("extended_container_v1"), NAME)
+    except Exception as e:
+        host.warn(f"处理旧版主程序补丁失败，跳过: {e}")
+
+    # v2：组件设置页的 setSource 在代理项文件里，backendObj 注入跟着搬过去
+    try:
+        host.apply_ops("delegate", host.ops("extended_delegate"), NAME)
+    except Exception as e:
+        host.warn(f"应用组件设置页补丁失败: {e}")
+
     return True
 
 
