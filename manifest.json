@@ -8,8 +8,8 @@
       "patches": [
         "src/qml/ClassWidgets/Components/WidgetsContainer.qml"
       ],
-      "cw2_min": "2.0.0.dev20260916",
-      "cw2_max": "2.0.0.dev20260923",
+      "cw2_min": "2.0.0.dev20260928",
+      "cw2_max": "2.0.0.dev20260928",
       "versions": [
         {
           "version": "1.3.4",
@@ -18,6 +18,14 @@
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.extended_settings-1.3.4.cwpayload",
           "size": 4248,
           "sha256": "0cb8662a4d4104020adb8c561777dd52787fe2248264730b9dfc3d2ccb1027d0"
+        },
+        {
+          "version": "1.4.0",
+          "tested": true,
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.extended_settings-1.4.0.cwpayload",
+          "size": 4248,
+          "sha256": "639b63ce9a04eabdda6f90fc8ee9927568192f5d3e1acbabaa04be24939bbb8c"
         }
       ]
     },
@@ -70,8 +78,8 @@
         "src/qml/ClassWidgets/Components/WidgetLoader.qml",
         "src/qml/ClassWidgets/Components/dialogs/AddOverlayMemberDialog.qml"
       ],
-      "cw2_min": "2.0.0.dev20260901",
-      "cw2_max": null,
+      "cw2_min": "2.0.0.dev20260928",
+      "cw2_max": "2.0.0.dev20260928",
       "versions": [
         {
           "version": "1.3.4",
@@ -80,11 +88,19 @@
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.overlay-1.3.4.cwpayload",
           "size": 20064,
           "sha256": "dbb94737da1d296d3bb8421a9c43ccb2112a57a80fd355300d4029ad9dd3dfcc"
+        },
+        {
+          "version": "1.4.0",
+          "tested": true,
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.overlay-1.4.0.cwpayload",
+          "size": 20528,
+          "sha256": "7c8ebd17a5597474156a9c2650025879fd78b91e952a8bd1005ed3e3d83c42ad"
         }
       ]
     }
   ],
-  "updated": "2026-10-02T21:19:59+08:00",
+  "updated": "2026-10-02T21:26:44+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"

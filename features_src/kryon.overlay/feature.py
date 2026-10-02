@@ -16,6 +16,15 @@ WIDGET_ID = "com.overlay"
 NAME = "堆叠 / Stack"
 
 
+def _patched(host, file_key, marker):
+    """判断某个主程序文件是否已经带上了本次补丁的标记。"""
+    try:
+        text, _ = host.read_host(file_key)
+        return marker in text
+    except Exception:                                          # noqa: BLE001
+        return False
+
+
 def apply_patches(host):
     """只打补丁，不注册组件。返回是否全部成功。"""
     if host.app_root is None:
@@ -35,14 +44,37 @@ def apply_patches(host):
         host.warn(f"装入成员选择窗口失败，跳过容器补丁: {e}")
         return False
 
+    # 新版主程序（2.0.0.dev20260928 起）把每个组件的界面代码拆进了
+    # WidgetsLayout.qml 与 WidgetsLayoutDelegate.qml，补丁随之分到这两个文件。
+    # 判定方式与「组件增强」一致：看布局文件里有没有新属性。
     try:
-        # atomic：容器补丁里「引用对话框」与「入口按钮」必须成套，
-        # 少一半会让主程序 QML 加载失败，所以整组成功才落盘。
-        host.apply_ops("container", host.ops("overlay_container"), NAME, atomic=True)
-        host.apply_ops("wloader", host.ops("overlay_wloader"), NAME)
+        host.apply_ops("layout", host.ops("overlay_layout"), NAME, atomic=True)
     except Exception as e:
-        host.warn(f"应用容器补丁失败: {e}")
-        return False
+        host.warn(f"新版布局补丁未应用（旧版主程序属正常）: {e}")
+
+    if _patched(host, "layout", "overlayEditingId"):
+        # 布局必须先成：代理项会引用 host.overlayEditingId
+        try:
+            # atomic：入口菜单项、编辑行、成员窗口引用必须成套，
+            # 少一半会让主程序 QML 加载失败，所以整组成功才落盘。
+            host.apply_ops("delegate", host.ops("overlay_delegate"), NAME, atomic=True)
+        except Exception as e:
+            host.warn(f"应用新版代理项补丁失败: {e}")
+            return False
+        try:
+            host.apply_ops("container", host.ops("overlay_container_v2"), NAME)
+        except Exception as e:
+            host.warn(f"应用新版容器可见性补丁失败: {e}")
+    else:
+        # 旧版主程序：原来的容器 + WidgetLoader 补丁
+        try:
+            # atomic：容器补丁里「引用对话框」与「入口按钮」必须成套，
+            # 少一半会让主程序 QML 加载失败，所以整组成功才落盘。
+            host.apply_ops("container", host.ops("overlay_container"), NAME, atomic=True)
+            host.apply_ops("wloader", host.ops("overlay_wloader"), NAME)
+        except Exception as e:
+            host.warn(f"应用容器补丁失败: {e}")
+            return False
     return True
 
 

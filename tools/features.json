@@ -16,8 +16,8 @@
       "patches": [
         "src/qml/ClassWidgets/Components/WidgetsContainer.qml"
       ],
-      "cw2_min": "2.0.0.dev20260916",
-      "cw2_max": "2.0.0.dev20260923",
+      "cw2_min": "2.0.0.dev20260928",
+      "cw2_max": "2.0.0.dev20260928",
       "payload": true
     },
     {
@@ -52,8 +52,8 @@
         "src/qml/ClassWidgets/Components/WidgetLoader.qml",
         "src/qml/ClassWidgets/Components/dialogs/AddOverlayMemberDialog.qml"
       ],
-      "cw2_min": "2.0.0.dev20260901",
-      "cw2_max": null
+      "cw2_min": "2.0.0.dev20260928",
+      "cw2_max": "2.0.0.dev20260928"
     }
   ],
   "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name} 会被替换（模板里用到 {tag} 时命令行需给 --tag）。现在指向滚动 Release，标签写死 payloads，所以每次发布都要把历史版本一起重传，老地址才不会失效；仓库直链模板是 https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}。"
