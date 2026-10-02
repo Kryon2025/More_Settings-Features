@@ -1,12 +1,12 @@
 {
   "_comment": "人工维护的适配策略。make_payloads.py 只往里补构建产物信息（sha256/大小/地址），绝不覆盖这里手写的字段。",
   "_comment2": "cw2_min / cw2_max 必须写成主程序真实的版本形式（实测是 2.0.0.dev20260916 这种 PEP 440 形式），不要写成裸日期 dev20260901 —— 裸日期和 PEP 440 会落进不同的比较桶，导致判定永远不匹配。null 表示不限。",
-  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload。功能包由本仓库的 payloads 工作流挂到 payloads 标签的滚动 Release 上（附件即发布页可下载的那份），不进插件广场；发布动作就是「提交 payloads/ 与 manifest.json，再推一次 payloads 标签」。",
+  "_comment3": "\"payload\": true 表示这个功能会被 features_src/<id>/ 打成独立的 .cwpayload。功能包住在仓库的 payloads/ 目录，由 manifest.json 里的直链分发，不进插件广场；发布动作就是「提交 payloads/ 与 manifest.json」。",
   "schema": 1,
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101",
-    "asset_url_template": "https://github.com/{repo}/releases/download/payloads/{name}"
+    "asset_url_template": "https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}"
   },
   "features": [
     {
@@ -56,5 +56,5 @@
       "cw2_max": "2.0.0.dev20260928"
     }
   ],
-  "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name} 会被替换（模板里用到 {tag} 时命令行需给 --tag）。现在指向滚动 Release，标签写死 payloads，所以每次发布都要把历史版本一起重传，老地址才不会失效；仓库直链模板是 https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}。"
+  "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name} 会被替换（模板里用到 {tag} 时命令行需给 --tag）。现在走仓库直链，与标签无关 —— 每条版本记录的地址各自独立，发布新版本不会改动老版本的地址；想换 CDN 或改走某个 Release 只改这一个字符串。"
 }
