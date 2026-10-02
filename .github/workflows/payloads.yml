@@ -1,0 +1,66 @@
+name: 发布功能包
+
+# 每个主程序版本一个 Release：推 payloads-<主程序版本> 标签，
+# 就把该主程序版本应得的 payload 全部挂到这个标签自己的 Release 上。
+#   payloads-2.0.0.dev20260928  → 适配 20260928 的那批
+#   payloads-2.0.0.dev20260920  → 适配 20260920 的那批（如 1.3.4）
+#
+# 哪些包属于哪个主程序版本，由 manifest.json 里**每条版本记录**的
+# cw2_min / cw2_max 决定（挑选逻辑见 tools/collect_payloads.py）。
+# 因此历史版本各自的地址互不影响：发布新版本不会改动老版本所属的 Release。
+on:
+  push:
+    tags:
+      - "payloads-*"
+  workflow_dispatch:
+    inputs:
+      main_version:
+        description: 主程序版本（如 2.0.0.dev20260928）
+        required: true
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+
+      - name: 确定主程序版本
+        id: ver
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ]; then
+            echo "main=${{ inputs.main_version }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "main=${GITHUB_REF_NAME#payloads-}" >> "$GITHUB_OUTPUT"
+          fi
+
+      # 清单与源码不一致就别发：用户下载到的包会和清单里的 sha256 对不上。
+      - name: 校验清单与源码一致
+        run: python tools/make_payloads.py --check
+
+      - name: 按主程序版本挑选 payload
+        run: python tools/collect_payloads.py "${{ steps.ver.outputs.main }}" --out release
+
+      - name: 发布到该主程序版本的 Release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: payloads-${{ steps.ver.outputs.main }}
+          name: 功能包 · 适配主程序 ${{ steps.ver.outputs.main }}
+          draft: false
+          prerelease: false
+          files: release/*.cwpayload
+          body: |
+            适配主程序 `${{ steps.ver.outputs.main }}` 的功能包。
+
+            版本号、大小与 sha256 以仓库根目录的
+            [manifest.json](https://github.com/Kryon2025/More_Settings-Features/blob/main/manifest.json) 为准
+            —— 加载器读的就是它。功能包不进插件广场。
+
+            每个主程序版本一个发布页，历史版本的地址互不影响。

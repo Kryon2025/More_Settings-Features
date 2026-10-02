@@ -348,6 +348,10 @@ def main() -> int:
                 versions[version] = {
                     "version": version,
                     "tested": bool(args.tested),
+                    # 兼容区间烙在条目上：一个功能的历史版本可以各自适配不同的
+                    # 主程序版本，这样旧版主程序也能拿到它那一版 payload。
+                    "cw2_min": pol.get("cw2_min"),
+                    "cw2_max": pol.get("cw2_max"),
                     "note": "",
                     "asset": url,
                     "size": path.stat().st_size,
