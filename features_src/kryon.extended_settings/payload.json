@@ -1,7 +1,7 @@
 {
   "id": "kryon.extended_settings",
   "name": "组件增强",
-  "version": "1.4.1",
+  "version": "1.4.2",
   "entry": "feature.py",
   "summary": "小组件高度与深度、特定课程不隐藏，以及组件设置页的后端注入。",
   "resources": {

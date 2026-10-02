@@ -6,7 +6,8 @@
       "name": "组件增强",
       "summary": "小组件高度与深度、特定课程不隐藏，以及组件设置页的后端注入。这些是打在主程序上的补丁，卸载后补丁会真的撤掉。",
       "patches": [
-        "src/qml/ClassWidgets/Components/WidgetsContainer.qml"
+        "src/qml/ClassWidgets/Components/WidgetsContainer.qml",
+        "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
       "cw2_min": "2.0.0.dev20260928",
       "cw2_max": "2.0.0.dev20260928",
@@ -40,6 +41,16 @@
           "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.4.1.cwpayload",
           "size": 4418,
           "sha256": "1b834edd6f4298ae2ee5add0df1cec430a7c678d5e9e9afcd89e03d2318f4bb2"
+        },
+        {
+          "version": "1.4.2",
+          "tested": true,
+          "cw2_min": "2.0.0.dev20260928",
+          "cw2_max": "2.0.0.dev20260928",
+          "note": "",
+          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.4.2.cwpayload",
+          "size": 4418,
+          "sha256": "5f4ba37391f1c91eb2175d65dd11227e73c0589b74d809b4a48d7d0f0af5f0d7"
         }
       ]
     },
@@ -94,7 +105,9 @@
       "patches": [
         "src/qml/ClassWidgets/Components/WidgetsContainer.qml",
         "src/qml/ClassWidgets/Components/WidgetLoader.qml",
-        "src/qml/ClassWidgets/Components/dialogs/AddOverlayMemberDialog.qml"
+        "src/qml/ClassWidgets/Components/dialogs/AddOverlayMemberDialog.qml",
+        "src/qml/ClassWidgets/Components/WidgetsLayout.qml",
+        "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
       "cw2_min": "2.0.0.dev20260928",
       "cw2_max": "2.0.0.dev20260928",
@@ -118,11 +131,21 @@
           "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.0.cwpayload",
           "size": 20528,
           "sha256": "7c8ebd17a5597474156a9c2650025879fd78b91e952a8bd1005ed3e3d83c42ad"
+        },
+        {
+          "version": "1.4.1",
+          "tested": true,
+          "cw2_min": "2.0.0.dev20260928",
+          "cw2_max": "2.0.0.dev20260928",
+          "note": "",
+          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.1.cwpayload",
+          "size": 20528,
+          "sha256": "7b3023bccc381c16344f315797503c79865f0128ebabb384622e8fc21507675c"
         }
       ]
     }
   ],
-  "updated": "2026-10-02T21:49:43+08:00",
+  "updated": "2026-10-02T22:02:12+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"
