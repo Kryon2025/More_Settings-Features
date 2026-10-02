@@ -15,7 +15,7 @@
           "version": "1.3.4",
           "tested": true,
           "note": "",
-          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.extended_settings-1.3.4.cwpayload",
+          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.3.4.cwpayload",
           "size": 4248,
           "sha256": "0cb8662a4d4104020adb8c561777dd52787fe2248264730b9dfc3d2ccb1027d0"
         },
@@ -23,7 +23,7 @@
           "version": "1.4.0",
           "tested": true,
           "note": "",
-          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.extended_settings-1.4.0.cwpayload",
+          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.4.0.cwpayload",
           "size": 4248,
           "sha256": "639b63ce9a04eabdda6f90fc8ee9927568192f5d3e1acbabaa04be24939bbb8c"
         },
@@ -93,7 +93,7 @@
           "version": "1.3.4",
           "tested": true,
           "note": "",
-          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/payloads/kryon.overlay-1.3.4.cwpayload",
+          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.3.4.cwpayload",
           "size": 20064,
           "sha256": "dbb94737da1d296d3bb8421a9c43ccb2112a57a80fd355300d4029ad9dd3dfcc"
         },
