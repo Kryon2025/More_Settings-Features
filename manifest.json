@@ -151,11 +151,21 @@
           "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.2.cwpayload",
           "size": 20578,
           "sha256": "f7719b89f2bb5d31488279de055208fa2adfab479649bd31961daf0190fcfe5f"
+        },
+        {
+          "version": "1.4.3",
+          "tested": true,
+          "cw2_min": "2.0.0.dev20260928",
+          "cw2_max": "2.0.0.dev20260928",
+          "note": "",
+          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.3.cwpayload",
+          "size": 20508,
+          "sha256": "9b4700257e2f1324a29560d943b711932718b887f8acbaf6ef817c274793982a"
         }
       ]
     }
   ],
-  "updated": "2026-10-03T10:05:38+08:00",
+  "updated": "2026-10-03T10:39:34+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"
