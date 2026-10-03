@@ -75,12 +75,8 @@ SettingsLayout {
         frameH = 0
     }
 
-    SettingCard {
+    SettingItem {
         color: "transparent"
-        border.color: "transparent"
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
-        Layout.fillWidth: true
         title: "轮播间隔"
         description: "每个组件停留后切换到下一个的时间（秒），加减按钮以 1 秒调整。"
 
@@ -106,12 +102,8 @@ SettingsLayout {
         }
     }
 
-    SettingCard {
+    SettingItem {
         color: "transparent"
-        border.color: "transparent"
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
-        Layout.fillWidth: true
         title: "组件框大小模式"
         description: "固定为最大组件：始终以最大成员组件的边框为组件框大小；跟随当前组件：组件框随当前展示组件的大小平滑变化。"
 
@@ -160,12 +152,8 @@ SettingsLayout {
         }
     }
 
-    SettingCard {
+    SettingItem {
         color: "transparent"
-        border.color: "transparent"
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
-        Layout.fillWidth: true
         title: "显示切换条"
         description: "在组件右侧显示“切换”按钮，点击可手动切换到下一个成员组件。"
 
@@ -176,13 +164,9 @@ SettingsLayout {
         }
     }
 
-    SettingCard {
-        color: "transparent"
-        border.color: "transparent"
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
-        Layout.fillWidth: true
+    SettingItem {
         showDivider: false
+        color: "transparent"
         title: "歌词感知轮播"
         description: "开启后：歌词岛 / MediaWidgets 未获取到歌词或播放信息时不参与轮播；若全部成员均无内容则整个组件自动隐藏，直到再次获取到内容。默认关闭。"
 
