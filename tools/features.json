@@ -17,7 +17,7 @@
         "src/qml/ClassWidgets/Components/WidgetsContainer.qml",
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
-      "cw2_min": "2.0.0.dev20260928",
+      "cw2_min": "2.0.0.dev20261002",
       "cw2_max": "2.0.0.dev20261002",
       "payload": true
     },
@@ -55,7 +55,7 @@
         "src/qml/ClassWidgets/Components/WidgetsLayout.qml",
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
-      "cw2_min": "2.0.0.dev20260928",
+      "cw2_min": "2.0.0.dev20261002",
       "cw2_max": "2.0.0.dev20261002"
     }
   ],
