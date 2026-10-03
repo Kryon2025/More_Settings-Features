@@ -35,7 +35,7 @@ def apply_patches(host):
     P = host.import_own("patches.py")
 
     # 已移除「编辑成员组件」入口与其成员弹窗：把对应 op 全部剔除，避免再次注入
-    _DROP = ("编辑成员组件", "overlayMemberDialog", "AddOverlayMemberDialog")
+    _DROP = ("overlayMemberDialog", "AddOverlayMemberDialog")
     for _n in ("_OVERLAY_LAYOUT_OPS", "_OVERLAY_DELEGATE_OPS",
                "_OVERLAY_CONTAINER_V2_OPS", "_CONTAINER_OVERLAY_OPS", "_WLOADER_OPS"):
         setattr(P, _n, [o for o in getattr(P, _n)
