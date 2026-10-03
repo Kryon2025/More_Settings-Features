@@ -31,6 +31,9 @@ def apply_patches(host):
         host.warn("未找到主程序目录")
         return False
 
+    # 补丁 ops 随功能包版本走（原来放在加载器 integrations.py 里）
+    P = host.import_own("patches.py")
+
     # 顺序很重要：容器补丁会往 WidgetsContainer.qml 注入
     # `AddOverlayMemberDialog { ... }` 这个引用，所以**必须先把它装进主程序**。
     # 反过来的话，补丁落盘了而组件不存在，主程序 QML 会因找不到组件而加载失败。
@@ -48,7 +51,7 @@ def apply_patches(host):
     # WidgetsLayout.qml 与 WidgetsLayoutDelegate.qml，补丁随之分到这两个文件。
     # 判定方式与「组件增强」一致：看布局文件里有没有新属性。
     try:
-        host.apply_ops("layout", host.ops("overlay_layout"), NAME, atomic=True)
+        host.apply_ops("layout", P._OVERLAY_LAYOUT_OPS, NAME, atomic=True)
     except Exception as e:
         host.warn(f"新版布局补丁未应用（旧版主程序属正常）: {e}")
 
@@ -57,12 +60,12 @@ def apply_patches(host):
         try:
             # atomic：入口菜单项、编辑行、成员窗口引用必须成套，
             # 少一半会让主程序 QML 加载失败，所以整组成功才落盘。
-            host.apply_ops("delegate", host.ops("overlay_delegate"), NAME, atomic=True)
+            host.apply_ops("delegate", P._OVERLAY_DELEGATE_OPS, NAME, atomic=True)
         except Exception as e:
             host.warn(f"应用新版代理项补丁失败: {e}")
             return False
         try:
-            host.apply_ops("container", host.ops("overlay_container_v2"), NAME)
+            host.apply_ops("container", P._OVERLAY_CONTAINER_V2_OPS, NAME)
         except Exception as e:
             host.warn(f"应用新版容器可见性补丁失败: {e}")
     else:
@@ -70,8 +73,8 @@ def apply_patches(host):
         try:
             # atomic：容器补丁里「引用对话框」与「入口按钮」必须成套，
             # 少一半会让主程序 QML 加载失败，所以整组成功才落盘。
-            host.apply_ops("container", host.ops("overlay_container"), NAME, atomic=True)
-            host.apply_ops("wloader", host.ops("overlay_wloader"), NAME)
+            host.apply_ops("container", P._CONTAINER_OVERLAY_OPS, NAME, atomic=True)
+            host.apply_ops("wloader", P._WLOADER_OPS, NAME)
         except Exception as e:
             host.warn(f"应用容器补丁失败: {e}")
             return False
