@@ -6,7 +6,7 @@
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101",
-    "asset_url_template": "https://raw.githubusercontent.com/{repo}/{branch}/payloads/{name}"
+    "asset_url_template": "https://github.com/{repo}/releases/download/{id}-{version}/{name}"
   },
   "features": [
     {

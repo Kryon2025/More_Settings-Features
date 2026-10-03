@@ -341,7 +341,8 @@ def main() -> int:
                    or _DEFAULT_ASSET_URL)
             if "{tag}" in tpl and not args.tag:
                 print(f"  !! {fid}: 地址模板里有 {{tag}} 但没给 --tag，生成的地址会不正确")
-            url = tpl.format(repo=repo, tag=args.tag,
+            url = tpl.format(repo=repo, tag=args.tag, id=fid,
+                             version=version,
                              branch=_DEFAULT_BRANCH, name=path.name)
             old = versions.get(version)
             if old and str(old.get("sha256", "")).lower() == digest.lower():

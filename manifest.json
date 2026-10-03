@@ -18,7 +18,7 @@
           "cw2_min": "2.0.0.dev20260916",
           "cw2_max": "2.0.0.dev20260923",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.3.4/kryon.extended_settings-1.3.4.cwpayload",
           "size": 4248,
           "sha256": "0cb8662a4d4104020adb8c561777dd52787fe2248264730b9dfc3d2ccb1027d0"
         },
@@ -28,7 +28,7 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.4.0.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.0/kryon.extended_settings-1.4.0.cwpayload",
           "size": 4248,
           "sha256": "639b63ce9a04eabdda6f90fc8ee9927568192f5d3e1acbabaa04be24939bbb8c"
         },
@@ -38,7 +38,7 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.4.1.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.1/kryon.extended_settings-1.4.1.cwpayload",
           "size": 4418,
           "sha256": "1b834edd6f4298ae2ee5add0df1cec430a7c678d5e9e9afcd89e03d2318f4bb2"
         },
@@ -48,7 +48,7 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.extended_settings-1.4.2.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.2/kryon.extended_settings-1.4.2.cwpayload",
           "size": 4418,
           "sha256": "5f4ba37391f1c91eb2175d65dd11227e73c0589b74d809b4a48d7d0f0af5f0d7"
         }
@@ -70,7 +70,7 @@
           "cw2_min": "2.0.0.dev20260901",
           "cw2_max": null,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.time_enhance-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.time_enhance-1.3.4/kryon.time_enhance-1.3.4.cwpayload",
           "size": 5415,
           "sha256": "e084acfb960e2a3f54aaa87ccb6c76d5dcc8cb7b77281c458b367ebf60432d78"
         }
@@ -92,7 +92,7 @@
           "cw2_min": "2.0.0.dev20260901",
           "cw2_max": null,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.countdown_anim-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.countdown_anim-1.3.4/kryon.countdown_anim-1.3.4.cwpayload",
           "size": 3452,
           "sha256": "e08ce9465b6e5ffbf5ff637f245f801e5a85bb0532991962cd27faef9076dc3f"
         }
@@ -118,7 +118,7 @@
           "cw2_min": "2.0.0.dev20260901",
           "cw2_max": null,
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.3.4.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.overlay-1.3.4/kryon.overlay-1.3.4.cwpayload",
           "size": 20064,
           "sha256": "dbb94737da1d296d3bb8421a9c43ccb2112a57a80fd355300d4029ad9dd3dfcc"
         },
@@ -128,7 +128,7 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.0.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.overlay-1.4.0/kryon.overlay-1.4.0.cwpayload",
           "size": 20528,
           "sha256": "7c8ebd17a5597474156a9c2650025879fd78b91e952a8bd1005ed3e3d83c42ad"
         },
@@ -138,7 +138,7 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.1.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.overlay-1.4.1/kryon.overlay-1.4.1.cwpayload",
           "size": 20528,
           "sha256": "7b3023bccc381c16344f315797503c79865f0128ebabb384622e8fc21507675c"
         },
@@ -148,7 +148,7 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.2.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.overlay-1.4.2/kryon.overlay-1.4.2.cwpayload",
           "size": 20578,
           "sha256": "f7719b89f2bb5d31488279de055208fa2adfab479649bd31961daf0190fcfe5f"
         },
@@ -158,14 +158,14 @@
           "cw2_min": "2.0.0.dev20260928",
           "cw2_max": "2.0.0.dev20260928",
           "note": "",
-          "asset": "https://raw.githubusercontent.com/Kryon2025/More_Settings-Features/main/payloads/kryon.overlay-1.4.3.cwpayload",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.overlay-1.4.3/kryon.overlay-1.4.3.cwpayload",
           "size": 20508,
           "sha256": "9b4700257e2f1324a29560d943b711932718b887f8acbaf6ef817c274793982a"
         }
       ]
     }
   ],
-  "updated": "2026-10-03T10:39:34+08:00",
+  "updated": "2026-10-03T10:41:56+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"
