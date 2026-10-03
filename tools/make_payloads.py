@@ -43,6 +43,7 @@ import json
 import pathlib
 import re
 import sys
+import tempfile
 import zipfile
 
 # zip 内统一的固定时间戳：保证构建可复现（同源码 → 同字节 → 同 sha256）
@@ -220,6 +221,10 @@ def main() -> int:
     out_dir = (root / args.out_dir) if not pathlib.Path(args.out_dir).is_absolute() \
         else pathlib.Path(args.out_dir)
 
+    # --check 标称只读：重建会覆盖同路径文件，故放到临时目录，绝不碰已提交的 payloads/
+    build_out = (pathlib.Path(tempfile.mkdtemp(prefix="cwpayload_check_"))
+                 if args.check else out_dir)
+
     manifest_path = root / args.manifest
     manifest = json.loads(manifest_path.read_text(encoding="utf-8")) \
         if manifest_path.exists() else {"schema": 1, "features": []}
@@ -273,7 +278,7 @@ def main() -> int:
             if _v and _p.is_file():
                 committed[fid] = (sha256_of(_p), payload_content_digest(_p))
         try:
-            path, digest, version, meta = build_payload(root, feat, out_dir)
+            path, digest, version, meta = build_payload(root, feat, build_out)
         except Exception as e:
             problems.append(f"{fid}: 构建失败 — {e}")
             print(f"  !! {fid}: {e}")
