@@ -411,6 +411,11 @@ Item {
         overlayEditDialog.open()
     }
 
+    // 进入「编辑成员组件」模式时，自动打开本组件的成员编辑窗口
+    onOverlayListModeChanged: {
+        if (root.overlayListMode) root.openOverlayEditor()
+    }
+
     // 右键成员 → 单独编辑该组件设置
     function openMemberSettings(i) {
         var m = root.members[i]
