@@ -76,11 +76,10 @@ SettingsLayout {
     }
 
     SettingItem {
-        color: "transparent"
         title: "轮播间隔"
         description: "每个组件停留后切换到下一个的时间（秒），加减按钮以 1 秒调整。"
 
-        RowLayout {
+        action: RowLayout {
             Layout.preferredWidth: 260
             spacing: 8
             Button {
@@ -103,11 +102,10 @@ SettingsLayout {
     }
 
     SettingItem {
-        color: "transparent"
         title: "组件框大小模式"
         description: "固定为最大组件：始终以最大成员组件的边框为组件框大小；跟随当前组件：组件框随当前展示组件的大小平滑变化。"
 
-        ComboBox {
+        action: ComboBox {
             Layout.preferredWidth: 240
             textRole: "text"
             valueRole: "value"
@@ -153,11 +151,10 @@ SettingsLayout {
     }
 
     SettingItem {
-        color: "transparent"
         title: "显示切换条"
         description: "在组件右侧显示“切换”按钮，点击可手动切换到下一个成员组件。"
 
-        Switch {
+        action: Switch {
             primaryColor: Colors.proxy.controlStrongColor
             checked: settings.show_switch_bar !== false
             onCheckedChanged: settings.show_switch_bar = checked
@@ -166,11 +163,10 @@ SettingsLayout {
 
     SettingItem {
         showDivider: false
-        color: "transparent"
         title: "歌词感知轮播"
         description: "开启后：歌词岛 / MediaWidgets 未获取到歌词或播放信息时不参与轮播；若全部成员均无内容则整个组件自动隐藏，直到再次获取到内容。默认关闭。"
 
-        Switch {
+        action: Switch {
             primaryColor: Colors.proxy.controlStrongColor
             checked: settings.lyric_gate === true
             onCheckedChanged: settings.lyric_gate = checked
