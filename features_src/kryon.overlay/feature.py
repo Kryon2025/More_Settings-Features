@@ -34,18 +34,17 @@ def apply_patches(host):
     # 补丁 ops 随功能包版本走（原来放在加载器 integrations.py 里）
     P = host.import_own("patches.py")
 
+    # 已移除「编辑成员组件」入口与其成员弹窗：把对应 op 全部剔除，避免再次注入
+    _DROP = ("编辑成员组件", "overlayMemberDialog", "AddOverlayMemberDialog")
+    for _n in ("_OVERLAY_LAYOUT_OPS", "_OVERLAY_DELEGATE_OPS",
+               "_OVERLAY_CONTAINER_V2_OPS", "_CONTAINER_OVERLAY_OPS", "_WLOADER_OPS"):
+        setattr(P, _n, [o for o in getattr(P, _n)
+                        if not any(m in o[1] for m in _DROP)])
+
     # 顺序很重要：容器补丁会往 WidgetsContainer.qml 注入
     # `AddOverlayMemberDialog { ... }` 这个引用，所以**必须先把它装进主程序**。
     # 反过来的话，补丁落盘了而组件不存在，主程序 QML 会因找不到组件而加载失败。
-    try:
-        host.install_host_file(
-            "dialog",
-            host.read_own_bytes("host_patch/AddOverlayMemberDialog.qml"),
-            NAME,
-        )
-    except Exception as e:
-        host.warn(f"装入成员选择窗口失败，跳过容器补丁: {e}")
-        return False
+    # 成员弹窗已移除（AddOverlayMemberDialog 不再安装）
 
     # 新版主程序（2.0.0.dev20260928 起）把每个组件的界面代码拆进了
     # WidgetsLayout.qml 与 WidgetsLayoutDelegate.qml，补丁随之分到这两个文件。

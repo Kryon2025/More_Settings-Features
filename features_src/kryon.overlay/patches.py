@@ -79,7 +79,6 @@ _OVERLAY_DELEGATE_OPS = [
             text: qsTr("编辑成员组件")
             onTriggered: {
                 widgetMenu.close()
-                host.editRequested()
                 host.overlayEditingId = model.instanceId
                 // A：直接打开组件已有的编辑器，不再依赖组件端对 overlayListMode 的响应
                 if (loader.item && loader.item.openOverlayEditor)
