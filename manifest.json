@@ -10,7 +10,7 @@
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
       "cw2_min": "2.0.0.dev20260928",
-      "cw2_max": "2.0.0.dev20260928",
+      "cw2_max": "2.0.0.dev20261002",
       "versions": [
         {
           "version": "1.3.4",
@@ -46,7 +46,7 @@
           "version": "1.4.2",
           "tested": true,
           "cw2_min": "2.0.0.dev20260928",
-          "cw2_max": "2.0.0.dev20260928",
+          "cw2_max": "2.0.0.dev20261002",
           "note": "",
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.2/kryon.extended_settings-1.4.2.cwpayload",
           "size": 4418,
@@ -156,7 +156,7 @@
           "version": "1.4.3",
           "tested": true,
           "cw2_min": "2.0.0.dev20260928",
-          "cw2_max": "2.0.0.dev20260928",
+          "cw2_max": "2.0.0.dev20261002",
           "note": "",
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.overlay-1.4.3/kryon.overlay-1.4.3.cwpayload",
           "size": 20508,
@@ -165,7 +165,7 @@
       ]
     }
   ],
-  "updated": "2026-10-03T10:41:56+08:00",
+  "updated": "2026-10-03T10:51:06+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"

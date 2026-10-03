@@ -18,7 +18,7 @@
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
       "cw2_min": "2.0.0.dev20260928",
-      "cw2_max": "2.0.0.dev20260928",
+      "cw2_max": "2.0.0.dev20261002",
       "payload": true
     },
     {
@@ -56,7 +56,7 @@
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
       ],
       "cw2_min": "2.0.0.dev20260928",
-      "cw2_max": "2.0.0.dev20260928"
+      "cw2_max": "2.0.0.dev20261002"
     }
   ],
   "_comment4": "asset_url_template 是功能包的下载地址模板，{repo}/{branch}/{name} 会被替换（模板里用到 {tag} 时命令行需给 --tag）。现在走仓库直链，与标签无关 —— 每条版本记录的地址各自独立，发布新版本不会改动老版本的地址；想换 CDN 或改走某个 Release 只改这一个字符串。"
