@@ -6,7 +6,9 @@ import ClassWidgets.Plugins
 
 // 重叠组件设置页：轮播间隔 + 成员组件管理
 // 成员组件主要入口：桌面组件编辑界面右键 → “编辑重叠组件”
-
+// 排版按主程序 ClassWidgets/pages/editor/Settings.qml 的写法：
+//   SettingExpander（外层卡片，带 title/description）
+//     └ SettingItem { action: <内容> }（内层行，内容必须放 action:）
 SettingsLayout {
     spacing: 0
     property int secValue: 5
@@ -75,135 +77,145 @@ SettingsLayout {
         frameH = 0
     }
 
-    SettingItem {
-        color: "transparent"
+    SettingExpander {
+        Layout.fillWidth: true
         title: "轮播间隔"
         description: "每个组件停留后切换到下一个的时间（秒），加减按钮以 1 秒调整。"
+        expanded: true
 
-        RowLayout {
-            Layout.preferredWidth: 260
-            spacing: 8
-            Button {
-                text: "−"
-                implicitWidth: 36
-                onClicked: secValue = Math.max(1, secValue - 1)
-            }
-            Text {
-                Layout.preferredWidth: 70
-                horizontalAlignment: Text.AlignHCenter
-                text: secValue + " 秒"
-                font.bold: true
-            }
-            Button {
-                text: "+"
-                implicitWidth: 36
-                onClicked: secValue = Math.min(60, secValue + 1)
+        SettingItem {
+            action: RowLayout {
+                Layout.preferredWidth: 260
+                spacing: 8
+
+                Button {
+                    text: "−"
+                    implicitWidth: 36
+                    onClicked: secValue = Math.max(1, secValue - 1)
+                }
+                Text {
+                    Layout.preferredWidth: 70
+                    horizontalAlignment: Text.AlignHCenter
+                    text: secValue + " 秒"
+                    font.bold: true
+                }
+                Button {
+                    text: "+"
+                    implicitWidth: 36
+                    onClicked: secValue = Math.min(60, secValue + 1)
+                }
             }
         }
     }
 
-    SettingItem {
-        color: "transparent"
+    SettingExpander {
+        Layout.fillWidth: true
         title: "组件框大小模式"
         description: "固定为最大组件：始终以最大成员组件的边框为组件框大小；跟随当前组件：组件框随当前展示组件的大小平滑变化。"
+        expanded: true
 
-        ComboBox {
-            Layout.preferredWidth: 240
-            textRole: "text"
-            valueRole: "value"
-            model: [
-                { text: "固定为最大组件", value: "max" },
-                { text: "跟随当前组件", value: "auto" }
-            ]
-            Component.onCompleted: {
-                var v = settings.frame_mode || "max"
-                var i = indexOfValue(v)
-                currentIndex = i >= 0 ? i : 0
+        SettingItem {
+            action: ComboBox {
+                Layout.preferredWidth: 240
+                textRole: "text"
+                valueRole: "value"
+                model: [
+                    { text: "固定为最大组件", value: "max" },
+                    { text: "跟随当前组件", value: "auto" }
+                ]
+                Component.onCompleted: {
+                    var v = settings.frame_mode || "max"
+                    var i = indexOfValue(v)
+                    currentIndex = i >= 0 ? i : 0
+                }
+                onActivated: settings.frame_mode = currentValue
             }
-            onActivated: settings.frame_mode = currentValue
         }
     }
 
-    SettingCard {
-        color: "transparent"
-        border.color: "transparent"
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
+    SettingExpander {
         Layout.fillWidth: true
         title: "组件框尺寸"
         description: "自定义本堆叠组件的框宽高（自适应 = 跟随内容）。"
+        expanded: true
 
-        ColumnLayout {
-            spacing: 8
-            Text {
-                text: (frameW > 0 && frameH > 0) ? frameW + " × " + frameH
-                      : (frameW > 0) ? frameW + " × 自动"
-                      : (frameH > 0) ? "自动 × " + frameH : "自适应"
-                font.bold: true
-            }
-            RowLayout {
-                spacing: 6
-                Button { text: "宽−"; onClicked: stepFrame(-10, 0) }
-                Button { text: "宽+"; onClicked: stepFrame(10, 0) }
-                Button { text: "高−"; onClicked: stepFrame(0, -10) }
-                Button { text: "高+"; onClicked: stepFrame(0, 10) }
-                Button { text: "自适应"; onClicked: resetFrame() }
+        SettingItem {
+            action: ColumnLayout {
+                spacing: 8
+                Text {
+                    text: (frameW > 0 && frameH > 0) ? frameW + " × " + frameH
+                          : (frameW > 0) ? frameW + " × 自动"
+                          : (frameH > 0) ? "自动 × " + frameH : "自适应"
+                    font.bold: true
+                }
+                RowLayout {
+                    spacing: 6
+                    Button { text: "宽−"; onClicked: stepFrame(-10, 0) }
+                    Button { text: "宽+"; onClicked: stepFrame(10, 0) }
+                    Button { text: "高−"; onClicked: stepFrame(0, -10) }
+                    Button { text: "高+"; onClicked: stepFrame(0, 10) }
+                    Button { text: "自适应"; onClicked: resetFrame() }
+                }
             }
         }
     }
 
-    SettingItem {
-        color: "transparent"
+    SettingExpander {
+        Layout.fillWidth: true
         title: "显示切换条"
         description: "在组件右侧显示“切换”按钮，点击可手动切换到下一个成员组件。"
+        expanded: true
 
-        Switch {
-            primaryColor: Colors.proxy.controlStrongColor
-            checked: settings.show_switch_bar !== false
-            onCheckedChanged: settings.show_switch_bar = checked
+        SettingItem {
+            action: Switch {
+                primaryColor: Colors.proxy.controlStrongColor
+                checked: settings.show_switch_bar !== false
+                onCheckedChanged: settings.show_switch_bar = checked
+            }
         }
     }
 
-    SettingItem {
-        showDivider: false
-        color: "transparent"
+    SettingExpander {
+        Layout.fillWidth: true
         title: "歌词感知轮播"
         description: "开启后：歌词岛 / MediaWidgets 未获取到歌词或播放信息时不参与轮播；若全部成员均无内容则整个组件自动隐藏，直到再次获取到内容。默认关闭。"
+        expanded: true
 
-        Switch {
-            primaryColor: Colors.proxy.controlStrongColor
-            checked: settings.lyric_gate === true
-            onCheckedChanged: settings.lyric_gate = checked
+        SettingItem {
+            action: Switch {
+                primaryColor: Colors.proxy.controlStrongColor
+                checked: settings.lyric_gate === true
+                onCheckedChanged: settings.lyric_gate = checked
+            }
         }
     }
 
-    SettingCard {
-        color: "transparent"
-        border.color: "transparent"
-        Layout.topMargin: 10
-        Layout.bottomMargin: 10
+    SettingExpander {
         Layout.fillWidth: true
         title: "成员组件"
         description: "已叠加到本组件内的成员，可在桌面组件编辑界面中右键“编辑重叠组件”添加/移除。"
+        expanded: true
 
-        ColumnLayout {
-            spacing: 4
-            Repeater {
-                model: overlayBackend ? overlayBackend.getMembers(instanceId) : []
-                delegate: RowLayout {
-                    Layout.fillWidth: true
-                    spacing: 8
-                    Text {
+        SettingItem {
+            action: ColumnLayout {
+                spacing: 4
+                Repeater {
+                    model: overlayBackend ? overlayBackend.getMembers(instanceId) : []
+                    delegate: RowLayout {
                         Layout.fillWidth: true
-                        text: (index + 1) + ". " + nameOf(modelData.typeId)
-                        elide: Text.ElideMiddle
-                    }
-                    Button {
-                        text: "移除"
-                        implicitWidth: 52
-                        implicitHeight: 26
-                        onClicked: {
-                            if (overlayBackend) overlayBackend.removeMember(instanceId, modelData.key)
+                        spacing: 8
+                        Text {
+                            Layout.fillWidth: true
+                            text: (index + 1) + ". " + nameOf(modelData.typeId)
+                            elide: Text.ElideMiddle
+                        }
+                        Button {
+                            text: "移除"
+                            implicitWidth: 52
+                            implicitHeight: 26
+                            onClicked: {
+                                if (overlayBackend) overlayBackend.removeMember(instanceId, modelData.key)
+                            }
                         }
                     }
                 }
