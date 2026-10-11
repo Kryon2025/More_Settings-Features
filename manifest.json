@@ -4,7 +4,7 @@
     {
       "id": "kryon.extended_settings",
       "name": "组件增强",
-      "summary": "小组件高度与深度、特定课程不隐藏，以及组件设置页的后端注入。这些是打在主程序上的补丁，卸载后补丁会真的撤掉。",
+      "summary": "小组件高度与深度，以及组件设置页的后端注入。这些是打在主程序上的补丁，卸载后补丁会真的撤掉。",
       "patches": [
         "src/qml/ClassWidgets/Components/WidgetsContainer.qml",
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
@@ -51,6 +51,48 @@
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.2/kryon.extended_settings-1.4.2.cwpayload",
           "size": 4418,
           "sha256": "5f4ba37391f1c91eb2175d65dd11227e73c0589b74d809b4a48d7d0f0af5f0d7"
+        },
+        {
+          "version": "1.4.3",
+          "tested": false,
+          "cw2_min": "2.0.0.dev20261002",
+          "cw2_max": "2.0.0.dev20261002",
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.3/kryon.extended_settings-1.4.3.cwpayload",
+          "size": 4392,
+          "sha256": "ae91fcf5a496ae0fe2123a0a710c9052af852f63f25c05740d6cf3b22005b6c5"
+        },
+        {
+          "version": "1.4.4",
+          "tested": false,
+          "cw2_min": "2.0.0.dev20261002",
+          "cw2_max": "2.0.0.dev20261002",
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.4/kryon.extended_settings-1.4.4.cwpayload",
+          "size": 2976,
+          "sha256": "5fee3c65b07a55476b67c28d742b8b3cd7be24fc389f132ddf029a3b1f4f011f"
+        }
+      ]
+    },
+    {
+      "id": "kryon.do_not_hide",
+      "name": "特定课程不隐藏",
+      "summary": "官方「在课堂中隐藏」的例外：选定科目上课时保持组件可见。按课表科目判定，与课程标题无关。",
+      "patches": [
+        "src/qml/ClassWidgets/Components/WidgetsContainer.qml"
+      ],
+      "cw2_min": "2.0.0.dev20261002",
+      "cw2_max": null,
+      "versions": [
+        {
+          "version": "1.0.0",
+          "tested": true,
+          "cw2_min": "2.0.0.dev20261002",
+          "cw2_max": null,
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.do_not_hide-1.0.0/kryon.do_not_hide-1.0.0.cwpayload",
+          "size": 3346,
+          "sha256": "f3e862b9159b996dd4c9026fcdcb378cba6526762578ff4eff9a2c29917cb0ed"
         }
       ]
     },
@@ -195,7 +237,7 @@
       ]
     }
   ],
-  "updated": "2026-10-03T17:18:47+08:00",
+  "updated": "2026-10-11T10:42:31+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"

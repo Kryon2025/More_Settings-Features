@@ -12,7 +12,7 @@
     {
       "id": "kryon.extended_settings",
       "name": "组件增强",
-      "summary": "小组件高度与深度、特定课程不隐藏，以及组件设置页的后端注入。这些是打在主程序上的补丁，卸载后补丁会真的撤掉。",
+      "summary": "小组件高度与深度，以及组件设置页的后端注入。这些是打在主程序上的补丁，卸载后补丁会真的撤掉。",
       "patches": [
         "src/qml/ClassWidgets/Components/WidgetsContainer.qml",
         "src/qml/ClassWidgets/Components/WidgetsLayoutDelegate.qml"
@@ -20,6 +20,17 @@
       "cw2_min": "2.0.0.dev20261002",
       "cw2_max": "2.0.0.dev20261002",
       "payload": true
+    },
+    {
+      "id": "kryon.do_not_hide",
+      "name": "特定课程不隐藏",
+      "summary": "官方「在课堂中隐藏」的例外：选定科目上课时保持组件可见。按课表科目判定，与课程标题无关。",
+      "payload": true,
+      "patches": [
+        "src/qml/ClassWidgets/Components/WidgetsContainer.qml"
+      ],
+      "cw2_min": "2.0.0.dev20261002",
+      "cw2_max": null
     },
     {
       "id": "kryon.time_enhance",
