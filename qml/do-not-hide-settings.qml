@@ -23,9 +23,15 @@ ColumnLayout {
 
     Component.onCompleted: Qt.callLater(reload)
 
+    // 从 preferences 里读（点号路径写不进带点的插件 id，见下方 saveExcluded 注释）
     function pluginCfg() {
         try {
-            return Configs.data.plugins.configs[root.pluginId] || null
+            return {
+                hide_excluded_enabled:
+                    Configs.data.preferences.kryon_do_not_hide_enabled === true,
+                hide_excluded_subjects:
+                    Configs.data.preferences.kryon_do_not_hide_subjects || "[]"
+            }
         } catch (e) {
             return null
         }
@@ -47,9 +53,12 @@ ColumnLayout {
 
     function saveExcluded() {
         try {
-            Configs.set("plugins.configs." + root.pluginId + ".hide_excluded_enabled",
+            // 必须用无点号的键：Configs.set 只接受点号路径，而插件 id
+            // com.kryon.more_settings 自带点，会被拆成多余的层级 -> 写不进去。
+            // preferences.* 是宿主自己就在写的可写字典（floating_widget_x 等）。
+            Configs.set("preferences.kryon_do_not_hide_enabled",
                         root.excludedEnabled)
-            Configs.set("plugins.configs." + root.pluginId + ".hide_excluded_subjects",
+            Configs.set("preferences.kryon_do_not_hide_subjects",
                         JSON.stringify(root.excludedSubjects))
         } catch (e) {
             console.warn("保存「特定课程不隐藏」配置失败:", e)
