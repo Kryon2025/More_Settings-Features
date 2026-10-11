@@ -1,7 +1,7 @@
 {
   "id": "kryon.do_not_hide",
   "name": "特定课程不隐藏",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "entry": "feature.py",
   "summary": "官方「在课堂中隐藏」的例外：选定科目上课时保持小组件可见。按课表科目判定，与课程标题无关。",
   "resources": {
