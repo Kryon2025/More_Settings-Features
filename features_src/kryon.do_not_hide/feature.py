@@ -30,6 +30,7 @@ def apply_patches(host):
 
     try:
         host.apply_ops("container", host.ops("do_not_hide_ops"), NAME)
+        host.apply_ops("basewidget", host.ops("do_not_hide_base_ops"), NAME)
     except Exception as e:
         host.warn(f"应用「特定课程不隐藏」容器补丁失败: {e}")
         return False
