@@ -34,9 +34,6 @@ ColumnLayout {
 
     function syncControls() {
         root.syncingControls = true
-        var d = info.display_height
-        displaySlider.value = (d !== undefined && d !== null && d >= 0)
-            ? d : (Configs.data.preferences.widgets_offset_y || 0)
         var hd = info.hide_depth
         hideSlider.value = (hd !== undefined && hd !== null) ? hd : 24
         root.syncingControls = false
@@ -46,33 +43,7 @@ ColumnLayout {
     SettingItem {
         color: "transparent"
         title: qsTr("展示高度")
-        description: qsTr("组件距屏幕顶部的距离（顶部停靠时生效）。")
-
-        ColumnLayout {
-            Layout.preferredWidth: 300
-            Layout.fillWidth: true
-            Slider {
-                primaryColor: Colors.proxy.textColor
-                id: displaySlider
-                Layout.fillWidth: true
-                from: 0
-                to: 200
-                stepSize: 4
-                tickmarks: true
-                tickFrequency: 50
-                toolTip.text: Math.round(value) + " px"
-                onValueChanged: {
-                    if (pressed && !root.syncingControls && backend)
-                        backend.setDisplayHeight(value)
-                }
-            }
-            RowLayout {
-                Layout.fillWidth: true
-                Text { typography: Typography.Caption; text: qsTr("跟随默认偏移") }
-                Item { Layout.fillWidth: true }
-                Text { typography: Typography.Caption; text: Math.round(displaySlider.value) + " px" }
-            }
-        }
+        description: qsTr("可在主程序设置-小组件-小组件布局-展开设置列表 中进行Y轴偏移修改")
     }
 
     SettingItem {

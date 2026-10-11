@@ -71,6 +71,16 @@
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.4/kryon.extended_settings-1.4.4.cwpayload",
           "size": 2976,
           "sha256": "5fee3c65b07a55476b67c28d742b8b3cd7be24fc389f132ddf029a3b1f4f011f"
+        },
+        {
+          "version": "1.4.5",
+          "tested": true,
+          "cw2_min": "2.0.0.dev20261002",
+          "cw2_max": "2.0.0.dev20261002",
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.extended_settings-1.4.5/kryon.extended_settings-1.4.5.cwpayload",
+          "size": 2885,
+          "sha256": "454710556703118b5359fe3353051c45a34883b04c9046690f1372ec122208d6"
         }
       ]
     },
@@ -267,7 +277,7 @@
       ]
     }
   ],
-  "updated": "2026-10-11T13:16:41+08:00",
+  "updated": "2026-10-11T13:17:56+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"
