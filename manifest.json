@@ -111,8 +111,18 @@
           "cw2_max": null,
           "note": "",
           "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.do_not_hide-1.0.2/kryon.do_not_hide-1.0.2.cwpayload",
-          "size": 4074,
-          "sha256": "2f85cd985ebe004fffaf97c53dbd7fd815368bda681a7b26e3c89f3438763eda"
+          "size": 3309,
+          "sha256": "2c49843536af2c7ebe56557b23a97cdc4130f24972c955a9d6f0f2f932711912"
+        },
+        {
+          "version": "1.0.3",
+          "tested": true,
+          "cw2_min": "2.0.0.dev20261002",
+          "cw2_max": null,
+          "note": "",
+          "asset": "https://github.com/Kryon2025/More_Settings-Features/releases/download/kryon.do_not_hide-1.0.3/kryon.do_not_hide-1.0.3.cwpayload",
+          "size": 3308,
+          "sha256": "086e8ad9576703237690d86a5c2e477e3ba93062259ef0e6d837c9141f1211fc"
         }
       ]
     },
@@ -257,7 +267,7 @@
       ]
     }
   ],
-  "updated": "2026-10-11T13:08:42+08:00",
+  "updated": "2026-10-11T13:16:41+08:00",
   "installer": {
     "repo": "Kryon2025/More_Settings-Features",
     "min_cw2": "2.0.0.dev20260101"
